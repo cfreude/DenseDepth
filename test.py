@@ -10,6 +10,7 @@ from layers import BilinearUpSampling2D
 from tensorflow.keras.layers import Layer, InputSpec
 from utils import predict, load_images, display_images
 from matplotlib import pyplot as plt
+import numpy as np
 
 # Argument Parser
 parser = argparse.ArgumentParser(description='High Quality Monocular Depth Estimation via Transfer Learning')
@@ -34,6 +35,9 @@ print('\nLoaded ({0}) images of size {1}.'.format(inputs.shape[0], inputs.shape[
 # Compute results
 outputs = predict(model, inputs)
 
+with open('outputs.npy', 'wb') as f:
+    np.save(f, outputs)
+
 #matplotlib problem on ubuntu terminal fix
 #matplotlib.use('TkAgg')   
 
@@ -42,4 +46,6 @@ viz = display_images(outputs.copy(), inputs.copy())
 plt.figure(figsize=(10,5))
 plt.imshow(viz)
 plt.savefig('test.png')
-plt.show()
+plt.plot()
+
+
